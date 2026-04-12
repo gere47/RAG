@@ -45,6 +45,53 @@ st.markdown("""
 st.title("📜 Graph‑Grounded Temporal RAG")
 st.markdown("*Contradiction‑Resilient Question Answering over Evolving Legal Documents*")
 
+# In the sidebar, before the settings section
+with st.sidebar:
+    st.header("📤 Upload New Document")
+    
+    uploaded_file = st.file_uploader(
+        "Upload PDF",
+        type=["pdf"],
+        help="Upload a new version of a legal document"
+    )
+    
+    if uploaded_file:
+        doc_title = st.text_input("Document Title", value=uploaded_file.name)
+        effective_date = st.date_input("Effective Date", value=date.today())
+        
+        # Find which document this supersedes
+        import pandas as pd
+        manifest = pd.read_csv(config.manifest_path)
+        supersedes_options = ["None"] + manifest['doc_id'].tolist()
+        supersedes = st.selectbox("Supersedes Document", options=supersedes_options)
+        
+        if st.button("Process Document"):
+            with st.spinner("Processing..."):
+                # Save PDF
+                import uuid
+                new_id = f"doc_{str(uuid.uuid4())[:8]}"
+                pdf_path = config.RAW_PDFS_DIR / f"{new_id}.pdf"
+                
+                with open(pdf_path, "wb") as f:
+                    f.write(uploaded_file.getbuffer())
+                
+                # Update manifest
+                new_row = pd.DataFrame([{
+                    'doc_id': new_id,
+                    'doc_title': doc_title,
+                    'effective_date': str(effective_date),
+                    'supersedes_doc_id': None if supersedes == "None" else supersedes
+                }])
+                manifest = pd.concat([manifest, new_row], ignore_index=True)
+                manifest.to_csv(config.manifest_path, index=False)
+                
+                # Trigger pipeline for this single document
+                from src.ingest import ingest_single_document
+                ingest_single_document(new_id, str(effective_date))
+                
+                st.success(f"✅ Document {new_id} processed!")
+                st.rerun()
+                
 # Sidebar
 with st.sidebar:
     st.header("⚙️ Settings")

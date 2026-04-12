@@ -23,6 +23,10 @@ os.environ["ANONYMIZED_TELEMETRY"] = "false"
 
 logger = get_logger(__name__)
 
+def refresh_index(self):
+    """Rebuild BM25 index after new documents are added."""
+    self._build_index()
+    logger.info("BM25 index refreshed")
 
 @dataclass
 class RetrievedChunk:
