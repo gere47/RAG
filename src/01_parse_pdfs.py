@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-import pymupdf  # fitz
+import fitz  # PyMuPDF
 
 def parse_pdfs():
     # Load manifest
@@ -19,7 +19,7 @@ def parse_pdfs():
             continue
         
         # Extract text using PyMuPDF
-        doc = pymupdf.open(pdf_path)
+        doc = fitz.open(pdf_path)
         full_text = ""
         for page in doc:
             full_text += page.get_text()

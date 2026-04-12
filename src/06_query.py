@@ -5,6 +5,8 @@ import ollama
 import os
 from dotenv import load_dotenv
 import pandas as pd
+from functools import lru_cache
+os.environ["CHROMA_TELEMETRY_IMPL"] = "none"
 
 load_dotenv()
 
@@ -18,26 +20,18 @@ class QueryEngine:
         self.collection = self.chroma_client.get_collection("legal_clauses")
         self.embedder = SentenceTransformer(EMBEDDING_MODEL)
         
-        # Graph DB
-        uri = os.getenv("NEO4J_URI")
-        user = os.getenv("NEO4J_USER")
-        password = os.getenv("NEO4J_PASSWORD")
-        self.neo4j_driver = GraphDatabase.driver(uri, auth=(user, password))
-    
+        # Graph DB - DISABLED for now
+        self.neo4j_driver = None
+        
     def get_newest_version(self, chunk_id):
-        """Find the most recent version of a clause using graph traversal."""
-        with self.neo4j_driver.session() as session:
-            query = """
-            MATCH (c:Clause {id: $chunk_id})
-            OPTIONAL MATCH path = (c)-[:SUPERSEDES*]->(newest:Clause)
-            WHERE NOT (newest)-[:SUPERSEDES]->()
-            RETURN COALESCE(newest, c) AS final_node
-            """
-            result = session.run(query, chunk_id=chunk_id).single()
-            if result:
-                node = result['final_node']
-                return node['id'], node['text'], str(node['effective_date'])
-            return chunk_id, None, None
+        # Bypass Neo4j: fetch chunk text directly from ChromaDB
+        results = self.collection.get(ids=[chunk_id])
+        if results and results['documents']:
+            text = results['documents'][0]
+            meta = results['metadatas'][0] if results['metadatas'] else {}
+            effective_date = meta.get('effective_date', 'unknown')
+            return chunk_id, text, effective_date
+        return chunk_id, None, None
     
     def answer(self, question, target_date="2026-04-08"):
         # 1. Vector Search
@@ -64,24 +58,22 @@ class QueryEngine:
             else:
                 historical_pieces.append(f"[SUPERSEDED] Clause {newest_id} (Effective {newest_date}):\n{newest_text[:500]}\n")
         
-        # 3. Build Prompt
-        prompt = f"""[INST] You are a legal assistant. Today's date is {target_date}.
-RULES:
-1. Only use clauses with dates <= Today.
-2. If a clause is marked [SUPERSEDED], ignore it. Use the [CURRENT] clause.
+        prompt = f"""[INST] You are a helpful assistant answering questions based strictly on the provided legal document context.
 
-CONTEXT (CURRENT):
-{''.join(context_pieces[:3])}
+        CONTEXT:
+        {''.join(context_pieces[:3])}
 
-HISTORICAL (IGNORE UNLESS ASKED):
-{''.join(historical_pieces[:2])}
-
-Question: {question}
-Answer: [/INST]"""
-        
+        Question: {question}
+        Answer: [/INST]"""
+            
         # 4. Get LLM response
         response = ollama.generate(model=MODEL_NAME, prompt=prompt)
         return response['response']
+    
+    class QueryEngine:
+        @lru_cache(maxsize=1000)
+        def get_embedding(self, text: str):
+            return self.embedder.encode(text).tolist()
 
 if __name__ == "__main__":
     engine = QueryEngine()

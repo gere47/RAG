@@ -1,0 +1,9 @@
+﻿doc_id,doc_title,effective_date,supersedes_doc_id
+doc_001,Original Agreement,2020-01-15,
+doc_002,First Amendment,2021-06-01,doc_001
+doc_003,Second Amendment,2022-03-10,doc_002
+doc_004,Restated Agreement,2023-09-12,doc_003
+doc_005,Letter Agreement - Fee Waiver,2024-01-20,
+doc_006,Third Amendment,2024-11-05,doc_004
+doc_007,Termination Notice,2025-02-28,doc_006
+doc_008,Reinstatement Agreement,2025-07-01,doc_007
