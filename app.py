@@ -259,6 +259,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from src.query_engine import QueryEngine
 from src.config import config
 from src.logger import get_logger
+from src.ingest import ingest_single_document
 
 logger = get_logger(__name__)
 

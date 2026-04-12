@@ -17,7 +17,7 @@ from src.logger import get_logger
 from src.config import get_config, AppConfig
 from src.utils import handle_errors
 
-# Suppress ChromaDB telemetry
+# Suppress ChromaDB telemetryhy
 os.environ["CHROMA_TELEMETRY_IMPL"] = "none"
 os.environ["ANONYMIZED_TELEMETRY"] = "false"
 
@@ -41,6 +41,8 @@ class RetrievedChunk:
 
 class HybridRetriever:
     """Combines vector similarity and BM25 keyword matching."""
+    def search(self, query: str, top_k: int = 10, alpha: float = 0.7):
+        return self.hybrid_search(query, top_k, alpha)
     
     def __init__(self, collection: chromadb.Collection, embedding_model: SentenceTransformer):
         self.collection = collection
