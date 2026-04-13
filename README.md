@@ -1,4 +1,29 @@
 <div align="center">
+## 📖 About
+
+**Graph-Grounded Temporal RAG** is a production-grade legal intelligence platform that solves a critical problem in document QA: **contradictions across evolving documents**.
+
+Traditional RAG systems treat all document chunks equally—returning conflicting answers from old and new versions. This system maintains a **knowledge graph** of document relationships (SUPERSEDES) and performs **temporal traversal** to identify the *current active* version of any clause.
+
+### 🎯 Key Innovation
+
+When you ask *"What is the penalty fee?"*, standard RAG might return both $100 (2020) and $150 (2023). **LexTemporal AI** traverses the graph, identifies the 2023 version as current, and answers $150—with full citation.
+
+### 🏗️ Built For
+
+- Legal professionals managing contract amendments
+- Compliance officers tracking regulatory changes
+- Researchers analyzing evolving document collections
+- Anyone dealing with versioned documents
+
+### 💡 Why It Matters
+
+| Problem | Solution |
+|---------|----------|
+| Conflicting answers from old documents | Graph-based contradiction resolution |
+| No audit trail for answers | Full citation chain with version tracking |
+| Cannot answer time-specific queries | Temporal context switching |
+| Manual version tracking | Automated SUPERSEDES relationships |
 
 # ⚖️ Graph-Grounded Temporal RAG
 
