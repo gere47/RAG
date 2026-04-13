@@ -1,17 +1,15 @@
-"""
-One-click demo script for showcasing Graph-Grounded Temporal RAG.
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
-
 from src.query_engine import QueryEngine
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 from rich.progress import Progress
 console = Console()
+import os
+os.environ["CHROMA_TELEMETRY_IMPL"] = "none"
+os.environ["ANONYMIZED_TELEMETRY"] = "false"
 
 
 def run_demo():

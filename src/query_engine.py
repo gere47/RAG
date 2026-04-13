@@ -1,7 +1,3 @@
-"""
-Production Query Engine with hybrid search, reranking, and graph grounding.
-"""
-
 import os
 from typing import List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass
@@ -41,8 +37,6 @@ class RetrievedChunk:
 
 class HybridRetriever:
     """Combines vector similarity and BM25 keyword matching."""
-    def search(self, query: str, top_k: int = 10, alpha: float = 0.7):
-        return self.hybrid_search(query, top_k, alpha)
     
     def __init__(self, collection: chromadb.Collection, embedding_model: SentenceTransformer):
         self.collection = collection
@@ -63,57 +57,49 @@ class HybridRetriever:
             tokenized = [doc.split() for doc in self.documents]
             self.bm25 = BM25Okapi(tokenized)
             logger.info(f"Built BM25 index with {len(self.documents)} documents")
-@handle_errors(default_return=[])
-def search(self, query: str, top_k: int = 10, alpha: float = 0.7) -> List[Tuple[str, float]]:
-    """
-    Hybrid search combining vector and BM25 scores.
-    """
-    if not self.bm25 or not self.documents:
-        logger.warning("BM25 index not available, falling back to vector search")
-        return self._vector_search_only(query, top_k)
     
-    # Vector search
-    query_embedding = self.embedder.encode(query, normalize_embeddings=True).tolist()
-    vector_results = self.collection.query(
-        query_embeddings=[query_embedding],
-        n_results=min(len(self.documents), top_k * 2),  # Get more for reranking
-        include=['documents', 'metadatas', 'distances']
-    )
-    
-    # Safety check
-    if not vector_results or 'ids' not in vector_results or not vector_results['ids']:
-        logger.warning("Vector search returned no results")
-        return []
-    
-    if not vector_results['ids'][0]:
-        return []
-    
-    # Get scores from vector search
-    if 'distances' in vector_results and vector_results['distances']:
-        vector_distances = vector_results['distances'][0]
-        vector_scores = self._normalize([1.0 / (1.0 + d) for d in vector_distances])
-    else:
-        vector_scores = self._normalize([1.0 / (i + 1) for i in range(len(vector_results['ids'][0]))])
-    
-    # BM25 search
-    tokenized_query = query.split()
-    bm25_scores = self.bm25.get_scores(tokenized_query)
-    bm25_scores_norm = self._normalize(bm25_scores)
-    
-    # Combine scores
-    combined_scores = {}
-    id_to_index = {id_: idx for idx, id_ in enumerate(self.ids)}
-    
-    for i, chunk_id in enumerate(vector_results['ids'][0]):
-        if chunk_id not in id_to_index:
-            continue
-        bm25_idx = id_to_index[chunk_id]
-        combined = alpha * vector_scores[i] + (1 - alpha) * bm25_scores_norm[bm25_idx]
-        combined_scores[chunk_id] = combined
-    
-    # Sort and return top_k
-    sorted_items = sorted(combined_scores.items(), key=lambda x: x[1], reverse=True)
-    return sorted_items[:top_k]
+    def search(self, query: str, top_k: int = 10, alpha: float = 0.7) -> List[Tuple[str, float]]:
+        """Hybrid search combining vector and BM25 scores."""
+        if not self.bm25 or not self.documents:
+            logger.warning("BM25 index not available, falling back to vector search")
+            return self._vector_search_only(query, top_k)
+        
+        query_embedding = self.embedder.encode(query, normalize_embeddings=True).tolist()
+        n_results = min(len(self.documents), max(top_k * 2, 10))
+        vector_results = self.collection.query(
+            query_embeddings=[query_embedding],
+            n_results=n_results,
+            include=['documents', 'metadatas', 'distances']
+        )
+        
+        if not vector_results or 'ids' not in vector_results or not vector_results['ids']:
+            return []
+        
+        if not vector_results['ids'][0]:
+            return []
+        
+        if 'distances' in vector_results and vector_results['distances']:
+            vector_distances = vector_results['distances'][0]
+            vector_scores = self._normalize([1.0 / (1.0 + d) for d in vector_distances])
+        else:
+            vector_scores = self._normalize([1.0 / (i + 1) for i in range(len(vector_results['ids'][0]))])
+        
+        tokenized_query = query.split()
+        bm25_scores = self.bm25.get_scores(tokenized_query)
+        bm25_scores_norm = self._normalize(bm25_scores)
+        
+        combined_scores = {}
+        id_to_index = {id_: idx for idx, id_ in enumerate(self.ids)}
+        
+        for i, chunk_id in enumerate(vector_results['ids'][0]):
+            if chunk_id not in id_to_index:
+                continue
+            bm25_idx = id_to_index[chunk_id]
+            combined = alpha * vector_scores[i] + (1 - alpha) * bm25_scores_norm[bm25_idx]
+            combined_scores[chunk_id] = combined
+        
+        sorted_items = sorted(combined_scores.items(), key=lambda x: x[1], reverse=True)
+        return sorted_items[:top_k]
     
     def _vector_search_only(self, query: str, top_k: int) -> List[Tuple[str, float]]:
         """Fallback to pure vector search."""
@@ -123,10 +109,13 @@ def search(self, query: str, top_k: int = 10, alpha: float = 0.7) -> List[Tuple[
             n_results=top_k,
             include=['metadatas']
         )
+        if not results or 'ids' not in results or not results['ids']:
+            return []
         return [(id_, 1.0 / (i + 1)) for i, id_ in enumerate(results['ids'][0])]
     
     def _normalize(self, scores: List[float]) -> List[float]:
         """Normalize scores to [0, 1] range."""
+        import numpy as np
         scores = np.array(scores)
         min_s, max_s = scores.min(), scores.max()
         if max_s == min_s:

@@ -1,8 +1,3 @@
-"""
-REST API for Graph-Grounded Temporal RAG.
-Run with: uvicorn api:app --reload --host 0.0.0.0 --port 8000
-"""
-
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -16,6 +11,9 @@ from src.query_engine import QueryEngine
 from src.ingest import ingest_single_document
 from src.config import config
 from src.logger import get_logger
+import os
+os.environ["CHROMA_TELEMETRY_IMPL"] = "none"
+os.environ["ANONYMIZED_TELEMETRY"] = "false"
 
 logger = get_logger(__name__)
 

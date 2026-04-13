@@ -2,7 +2,6 @@ import json
 import chromadb
 from sentence_transformers import SentenceTransformer
 import os
-import os
 os.environ["CHROMA_TELEMETRY_IMPL"] = "none"
 os.environ["ANONYMIZED_TELEMETRY"] = "false"
 
