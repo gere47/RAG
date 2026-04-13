@@ -58,3 +58,259 @@ Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reas
 2026-04-13 08:49:47 | INFO     | src.query_engine | answer | Generated answer: The answer is not found in the documents....
 2026-04-13 08:52:35 | INFO     | src.query_engine | answer | Processing question: what is Labour migration
 2026-04-13 08:54:09 | INFO     | src.query_engine | answer | Generated answer: The answer is not found in the documents....
+2026-04-13 09:16:22 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:16:22 | INFO     | __main__ | main | Phase 1: Production PDF Parser
+2026-04-13 09:16:22 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:16:22 | INFO     | __main__ | parse_all_documents | Found 9 documents in manifest
+2026-04-13 09:16:22 | INFO     | __main__ | parse_single_document | Parsing: doc_001 - Original Agreement
+2026-04-13 09:16:23 | INFO     | __main__ | parse_single_document | Parsed doc_001: 62 pages, 157,709 chars, 23,051 words
+2026-04-13 09:16:23 | INFO     | src.utils | __exit__ | Parse doc_001 completed in 0.60s
+2026-04-13 09:16:23 | INFO     | __main__ | parse_single_document | Parsing: doc_002 - First Amendment
+2026-04-13 09:16:24 | INFO     | __main__ | parse_single_document | Parsed doc_002: 103 pages, 297,931 chars, 43,532 words
+2026-04-13 09:16:24 | INFO     | src.utils | __exit__ | Parse doc_002 completed in 1.42s
+2026-04-13 09:16:24 | INFO     | __main__ | parse_single_document | Parsing: doc_003 - Second Amendment
+2026-04-13 09:16:26 | INFO     | __main__ | parse_single_document | Parsed doc_003: 103 pages, 295,787 chars, 43,429 words
+2026-04-13 09:16:26 | INFO     | src.utils | __exit__ | Parse doc_003 completed in 1.38s
+2026-04-13 09:16:26 | INFO     | __main__ | parse_single_document | Parsing: doc_004 - Restated Agreement
+2026-04-13 09:16:27 | INFO     | __main__ | parse_single_document | Parsed doc_004: 248 pages, 531,902 chars, 79,623 words
+2026-04-13 09:16:27 | INFO     | src.utils | __exit__ | Parse doc_004 completed in 0.97s
+2026-04-13 09:16:27 | INFO     | __main__ | parse_single_document | Parsing: doc_005 - Letter Agreement - Fee Waiver
+2026-04-13 09:16:27 | INFO     | __main__ | parse_single_document | Parsed doc_005: 17 pages, 12,997 chars, 1,950 words
+2026-04-13 09:16:27 | INFO     | src.utils | __exit__ | Parse doc_005 completed in 0.12s
+2026-04-13 09:16:27 | INFO     | __main__ | parse_single_document | Parsing: doc_006 - Third Amendment
+2026-04-13 09:16:27 | INFO     | __main__ | parse_single_document | Parsed doc_006: 25 pages, 74,041 chars, 13,325 words
+2026-04-13 09:16:27 | INFO     | src.utils | __exit__ | Parse doc_006 completed in 0.22s
+2026-04-13 09:16:27 | INFO     | __main__ | parse_single_document | Parsing: doc_007 - Termination Notice
+2026-04-13 09:16:29 | INFO     | __main__ | parse_single_document | Parsed doc_007: 438 pages, 906,416 chars, 137,407 words
+2026-04-13 09:16:29 | INFO     | src.utils | __exit__ | Parse doc_007 completed in 2.14s
+2026-04-13 09:16:29 | INFO     | __main__ | parse_single_document | Parsing: doc_008 - Reinstatement Agreement
+2026-04-13 09:16:30 | INFO     | __main__ | parse_single_document | Parsed doc_008: 152 pages, 294,237 chars, 42,664 words
+2026-04-13 09:16:30 | INFO     | src.utils | __exit__ | Parse doc_008 completed in 0.82s
+2026-04-13 09:16:30 | INFO     | __main__ | parse_single_document | Parsing: doc_a540bf45 - experience for gere (1).pdf
+2026-04-13 09:16:30 | WARNING  | __main__ | extract_text_with_metadata | Possible scanned PDF detected: doc_a540bf45.pdf
+2026-04-13 09:16:30 | INFO     | __main__ | _attempt_ocr_fallback | Attempting OCR on doc_a540bf45.pdf...
+2026-04-13 09:16:30 | ERROR    | __main__ | _attempt_ocr_fallback | OCR failed: Unable to get page count. Is poppler installed and in PATH?
+2026-04-13 09:16:30 | INFO     | __main__ | parse_single_document | Parsed doc_a540bf45: 1 pages, 26 chars, 5 words
+2026-04-13 09:16:30 | INFO     | src.utils | __exit__ | Parse doc_a540bf45 completed in 0.15s
+2026-04-13 09:16:30 | INFO     | __main__ | parse_all_documents | Parsing complete: 9/9 successful
+2026-04-13 09:16:30 | INFO     | __main__ | main | ✅ Successfully parsed 9 documents
+2026-04-13 09:16:30 | INFO     | __main__ | main | 📁 Output directory: D:\Graphbased_temporal_RAG\data\processed_texts
+2026-04-13 09:16:30 | INFO     | __main__ | main | 📊 Report: D:\Graphbased_temporal_RAG\data\processed_texts/parsing_report.json
+2026-04-13 09:18:46 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:18:46 | INFO     | __main__ | main | Phase 2: Production Semantic Chunker
+2026-04-13 09:18:46 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:18:46 | INFO     | __main__ | main | Found 9 processed documents
+2026-04-13 09:18:47 | WARNING  | __main__ | chunk_document | No valid chunks generated for doc_a540bf45
+2026-04-13 09:18:47 | INFO     | src.utils | __exit__ | Chunking all documents completed in 1.27s
+2026-04-13 09:18:48 | INFO     | __main__ | main | ✅ Created 3108 chunks from 8 documents
+2026-04-13 09:18:48 | INFO     | __main__ | main | 📁 Chunks: D:\Graphbased_temporal_RAG\data\chunks\clauses.json
+2026-04-13 09:18:48 | INFO     | __main__ | main | 📊 Stats: D:\Graphbased_temporal_RAG\data\chunks\chunking_stats.json
+2026-04-13 09:18:48 | INFO     | __main__ | main | 📊 Average chunks per document: 388.5
+2026-04-13 09:21:37 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:21:37 | INFO     | __main__ | main | Phase 3: Production Entity Extractor
+2026-04-13 09:21:37 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:21:38 | INFO     | __main__ | main | Loaded 3108 chunks
+2026-04-13 09:21:38 | ERROR    | src.utils | safe_json_load | JSON file not found: D:\Graphbased_temporal_RAG\data\extracted\cache\extraction_cache.json
+2026-04-13 09:21:38 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:38 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:38 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:39 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:39 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:39 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:40 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:40 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:40 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:40 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:41 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:41 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:41 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:42 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:42 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:42 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:43 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:43 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:43 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:43 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:44 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:44 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:44 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:45 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:45 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:45 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:46 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:46 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:46 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:46 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:47 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:47 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:47 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:48 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:48 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:48 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:49 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:49 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:49 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:50 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:50 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:50 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:50 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:51 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:51 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:51 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:52 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:52 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:52 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:53 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:53 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:53 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:53 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:54 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:54 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:54 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:55 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:55 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:55 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:56 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:56 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:56 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:56 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:57 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:57 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:57 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:58 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:21:58 | INFO     | src.utils | __exit__ | Entity extraction completed in 20.03s
+2026-04-13 09:35:43 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:35:43 | INFO     | __main__ | main | Phase 3: Production Entity Extractor
+2026-04-13 09:35:43 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:35:43 | INFO     | __main__ | main | Loaded 3108 chunks
+2026-04-13 09:35:43 | INFO     | __main__ | main | TEST MODE: Processing first 5 chunks only
+2026-04-13 09:35:43 | ERROR    | src.utils | safe_json_load | JSON file not found: D:\Graphbased_temporal_RAG\data\extracted\cache\extraction_cache.json
+2026-04-13 09:35:43 | INFO     | __main__ | extract_all | Test mode: processing 5 chunks
+2026-04-13 09:35:43 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:35:44 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:35:44 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:35:44 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:35:44 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:35:44 | INFO     | src.utils | __exit__ | Entity extraction completed in 1.03s
+2026-04-13 09:35:44 | INFO     | __main__ | main | ✅ Extraction complete
+2026-04-13 09:35:44 | INFO     | __main__ | main |    Success: 0
+2026-04-13 09:35:44 | INFO     | __main__ | main |    Cached: 0
+2026-04-13 09:35:44 | INFO     | __main__ | main |    Failed: 0
+2026-04-13 09:35:44 | INFO     | __main__ | main | 📁 Output: D:\Graphbased_temporal_RAG\data\extracted\entities.jsonl
+2026-04-13 09:36:09 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:36:09 | INFO     | __main__ | main | Phase 3: Production Entity Extractor
+2026-04-13 09:36:09 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:36:09 | INFO     | __main__ | main | Loaded 3108 chunks
+2026-04-13 09:36:09 | INFO     | __main__ | main | TEST MODE: Processing first 5 chunks only
+2026-04-13 09:36:09 | INFO     | __main__ | extract_all | Test mode: processing 5 chunks
+2026-04-13 09:36:09 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:36:09 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:36:10 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:36:10 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:36:10 | ERROR    | src.utils | wrapper | Error in extract_from_chunk: '"clause_number"'
+2026-04-13 09:36:10 | INFO     | src.utils | __exit__ | Entity extraction completed in 1.04s
+2026-04-13 09:36:10 | INFO     | __main__ | main | ✅ Extraction complete
+2026-04-13 09:36:10 | INFO     | __main__ | main |    Success: 0
+2026-04-13 09:36:10 | INFO     | __main__ | main |    Cached: 0
+2026-04-13 09:36:10 | INFO     | __main__ | main |    Failed: 0
+2026-04-13 09:36:10 | INFO     | __main__ | main | 📁 Output: D:\Graphbased_temporal_RAG\data\extracted\entities.jsonl
+2026-04-13 09:39:42 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:39:42 | INFO     | __main__ | main | Phase 4: Production Graph Builder
+2026-04-13 09:39:42 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:39:44 | INFO     | __main__ | _connect | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 09:39:44 | INFO     | __main__ | build | Loaded 3108 chunks from 9 documents
+2026-04-13 09:39:45 | INFO     | __main__ | clear_database | Database cleared
+2026-04-13 09:39:46 | INFO     | __main__ | create_indexes | Indexes created
+2026-04-13 09:40:19 | INFO     | __main__ | build | Created 3108 Clause nodes
+2026-04-13 09:41:29 | INFO     | __main__ | build | Created 956698 SUPERSEDES relationships
+2026-04-13 09:41:37 | INFO     | __main__ | create_amendment_relationships | Created 0 AMENDS relationships
+2026-04-13 09:41:37 | INFO     | src.utils | __exit__ | Graph building completed in 112.43s
+2026-04-13 09:47:37 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:47:37 | INFO     | __main__ | main | Phase 5: Production Vector Index Builder
+2026-04-13 09:47:37 | INFO     | __main__ | main | ============================================================
+2026-04-13 09:47:47 | INFO     | __main__ | _initialize | Loaded embedding model: all-MiniLM-L6-v2
+2026-04-13 09:47:47 | INFO     | __main__ | build | Loaded 3108 chunks
+2026-04-13 09:47:47 | INFO     | __main__ | _get_or_create_collection | Deleted existing collection: legal_clauses
+2026-04-13 09:47:47 | INFO     | __main__ | _get_or_create_collection | Created new collection: legal_clauses
+2026-04-13 09:47:47 | INFO     | __main__ | index_chunks | Indexing 3108 chunks in 32 batches
+2026-04-13 09:53:04 | INFO     | src.utils | __exit__ | Vector indexing completed in 317.36s
+2026-04-13 09:53:05 | INFO     | __main__ | build | ✅ Index build complete in 318.3s
+2026-04-13 09:53:05 | INFO     | __main__ | build |    Chunks indexed: 3108/3108
+2026-04-13 09:53:05 | INFO     | __main__ | build |    Collection size: 52.53 MB
+2026-04-13 09:53:05 | INFO     | __main__ | build | 📊 Report: D:\Graphbased_temporal_RAG\data\vectors\index_build_report.json
+2026-04-13 09:53:05 | INFO     | __main__ | main | ✅ Successfully indexed 3108 chunks
+2026-04-13 09:56:16 | INFO     | __main__ | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 09:56:19 | INFO     | __main__ | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 09:56:30 | INFO     | __main__ | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 09:56:31 | INFO     | __main__ | _build_index | Built BM25 index with 3108 documents
+2026-04-13 09:56:31 | INFO     | __main__ | __init__ | QueryEngine initialized successfully
+2026-04-13 09:57:40 | INFO     | __main__ | answer | Query: & d:\Graphbased_temporal_RAG\venv\Scripts\Activate... → 60637ms
+2026-04-13 09:58:31 | INFO     | __main__ | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 09:58:33 | INFO     | __main__ | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 09:58:45 | INFO     | __main__ | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 09:58:46 | INFO     | __main__ | _build_index | Built BM25 index with 3108 documents
+2026-04-13 09:58:46 | INFO     | __main__ | __init__ | QueryEngine initialized successfully
+2026-04-13 09:59:11 | INFO     | __main__ | answer | Query: What is the effective date?... → 7659ms
+2026-04-13 10:01:00 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 10:01:02 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 10:07:49 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 10:07:50 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 10:07:50 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 10:08:46 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 10:08:48 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 10:10:08 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 10:10:09 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 10:10:09 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 10:11:42 | INFO     | src.query_engine | answer | Query: what is law means... → 49047ms
+2026-04-13 10:14:51 | INFO     | src.query_engine | answer | Query: what is the NO of THE ETHIOPIAN OVERSEAS 
+ 
+EMPLOY... → 63344ms
+2026-04-13 10:16:30 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 10:16:32 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 10:16:45 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 10:16:47 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 10:16:47 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 10:18:58 | INFO     | src.query_engine | answer | Query: what is the number of THE ETHIOPIAN OVERSEAS 
+ 
+EM... → 79328ms
+2026-04-13 10:20:47 | INFO     | src.query_engine | answer | Query: what is the legal system... → 47824ms
+2026-04-13 10:22:36 | INFO     | src.query_engine | answer | Query: what datas can i get from you?... → 76720ms
+2026-04-13 10:24:46 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 10:24:48 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 10:25:02 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 10:25:03 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 10:25:03 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 10:26:56 | INFO     | src.query_engine | answer | Query: what can i learn and what parts does this document... → 56304ms
+2026-04-13 10:27:34 | INFO     | src.query_engine | answer | Query: please give me the main points in 10 points clearl... → 13016ms
+2026-04-13 10:28:23 | INFO     | src.query_engine | answer | Query: give me the details of the documents... → 17732ms
+2026-04-13 10:29:19 | INFO     | src.query_engine | answer | Query: so what is the details of the documents... → 19071ms
+2026-04-13 10:30:01 | INFO     | src.query_engine | answer | Query: what can i learn or get from this documents please... → 10883ms
+2026-04-13 10:37:06 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 10:37:08 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 10:37:21 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 10:37:21 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 10:37:21 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 10:41:11 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 10:41:13 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 10:41:26 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 10:41:29 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 10:41:29 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 10:43:19 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 10:43:21 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 10:43:35 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 10:43:38 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 10:43:38 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 11:07:48 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 11:07:50 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 11:08:04 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 11:08:05 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 11:08:05 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 11:14:59 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 11:15:01 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 11:15:14 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 11:15:17 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 11:15:17 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 11:17:17 | INFO     | src.query_engine | answer | Query: what can i learn from this document... → 94459ms
+2026-04-13 11:18:18 | INFO     | src.query_engine | answer | Query: what are the main points or concepts of this docum... → 32887ms
+2026-04-13 11:20:41 | INFO     | src.query_engine | answer | Query: so ask me from the documents and you will test my ... → 82914ms
+2026-04-13 11:21:48 | INFO     | src.query_engine | answer | Query: 10... → 37304ms
