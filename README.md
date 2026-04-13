@@ -322,4 +322,149 @@ Special thanks to the open-source projects that make this possible:
   </a>
 </p>
 
+</div><div align="center">
+
+# ⚖️ Graph-Grounded Temporal RAG
+
+### Contradiction-Resilient Question Answering over Evolving Legal Documents
+
+[![Python](https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io)
+[![Neo4j](https://img.shields.io/badge/Neo4j-008CC1?style=for-the-badge&logo=neo4j&logoColor=white)](https://neo4j.com)
+[![ChromaDB](https://img.shields.io/badge/ChromaDB-FF6B6B?style=for-the-badge&logo=database&logoColor=white)](https://trychroma.com)
+[![Ollama](https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white)](https://ollama.ai)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success)](https://github.com/gere47/RAG)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 </div>
+
+---
+
+## 📖 Overview
+
+**Graph-Grounded Temporal RAG** is a production-grade legal intelligence platform that extends standard RAG with **temporal reasoning** and **contradiction resolution**. Unlike traditional RAG systems that treat all document chunks equally—leading to conflicting answers when multiple versions exist—this system maintains a **knowledge graph** of document relationships to identify the *current active* version of any clause.
+
+### 🎯 The Problem
+
+| Traditional RAG | This System |
+|----------------|-------------|
+| Returns conflicting answers from old and new documents | Resolves contradictions via graph traversal |
+| Treats all versions equally | Understands temporal order and effective dates |
+| Cannot answer "What was the rule in 2021?" | Answers temporal queries with historical context |
+| No audit trail | Full citation chain with version tracking |
+
+### ✅ Solution
+
+- **Graph-Grounded**: Neo4j tracks `SUPERSEDES` relationships between documents
+- **Temporal-Aware**: Answers based on effective dates
+- **Contradiction-Resilient**: Graph traversal identifies the terminal (current) version
+- **Local-First**: Runs entirely on your machine with free, open-source models
+
+---
+
+## 🏗️ Architecture
+
+┌─────────────────────────────────────────────────────────────────┐
+│ INGESTION PIPELINE │
+│ PDF Upload → Text Extraction → Chunking → Metadata Extraction │
+└─────────────────────────────────────────────────────────────────┘
+│
+▼
+┌─────────────────────────────────────────────────────────────────┐
+│ STORAGE LAYER │
+│ ┌─────────────────┐ ┌─────────────────┐ │
+│ │ ChromaDB │ │ Neo4j │ │
+│ │ (Vector Store) │ │ (Graph DB) │ │
+│ └─────────────────┘ └─────────────────┘ │
+└─────────────────────────────────────────────────────────────────┘
+│
+▼
+┌─────────────────────────────────────────────────────────────────┐
+│ RETRIEVAL LAYER │
+│ Vector Search + BM25 → Hybrid Combiner → Cross-Encoder Rerank │
+└─────────────────────────────────────────────────────────────────┘
+│
+▼
+┌─────────────────────────────────────────────────────────────────┐
+│ TEMPORAL RESOLUTION │
+│ Graph Traversal: (c)-[:SUPERSEDES*]->(newest) │
+│ WHERE NOT (newest)-[:SUPERSEDES]->() │
+└─────────────────────────────────────────────────────────────────┘
+│
+▼
+┌─────────────────────────────────────────────────────────────────┐
+│ GENERATION LAYER │
+│ Context Assembly → Llama 3.2 (Ollama) → Answer │
+└─────────────────────────────────────────────────────────────────┘
+│
+▼
+┌─────────────────────────────────────────────────────────────────┐
+│ INTERFACE LAYER │
+│ Streamlit UI │ FastAPI REST │ CLI / Demo │
+└─────────────────────────────────────────────────────────────────┘
+
+
+---
+
+## ✨ Key Features
+
+| Feature | Description |
+|---------|-------------|
+| 🕸️ **Graph-Grounded** | Neo4j knowledge graph tracks document evolution |
+| ⏳ **Temporal Reasoning** | Answers based on effective dates, supports historical queries |
+| 🔍 **Hybrid Search** | Vector similarity (α=0.7) + BM25 keyword matching |
+| 🎯 **Cross-Encoder Reranking** | MS MARCO model for precision-focused reordering |
+| 🤖 **Local LLM** | Llama 3.2 via Ollama—free, private, no API costs |
+| 📎 **Full Citations** | Every answer includes source documents and version status |
+| 🖥️ **Professional UI** | Streamlit interface with timeline visualization |
+| 🔌 **REST API** | FastAPI endpoints for programmatic access |
+| 🐳 **Docker Ready** | One-command containerized deployment |
+| 📊 **Monitoring** | Structured logging and metrics |
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.11+
+- [Ollama](https://ollama.ai) (for local LLM)
+- [Neo4j Desktop](https://neo4j.com/download/) OR [Docker](https://docker.com)
+- 8GB+ RAM
+
+### One-Command Installation
+
+```bash
+# Clone repository
+git clone https://github.com/gere47/RAG.git
+cd RAG
+
+# Setup virtual environment
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # macOS/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Pull LLM model
+ollama pull llama3.2:3b
+
+# Start Neo4j (Docker)
+docker run -d --name neo4j-graphrag -p 7474:7474 -p 7687:7687 -e NEO4J_AUTH=neo4j/password123 neo4j:community
+
+# Configure environment
+echo NEO4J_URI=bolt://localhost:7687 > .env
+echo NEO4J_USER=neo4j >> .env
+echo NEO4J_PASSWORD=password123 >> .env
+
+# Place PDFs in data/raw_pdfs/ and update document_manifest.csv
+
+# Run pipeline
+python run_pipeline.py --clean
+
+# Launch interface
+streamlit run app.py
