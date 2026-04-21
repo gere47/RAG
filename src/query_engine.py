@@ -21,7 +21,7 @@ from neo4j import GraphDatabase
 from rank_bm25 import BM25Okapi
 from src.contradiction_detector import create_contradiction_detector
 from src.optimized_retriever import OptimizedQueryEngine
-from src.agentic_engine import AgenticQueryEngine
+# from src.agentic_engine import AgenticQueryEngine
 
 from src.logger import get_logger
 from src.config import config

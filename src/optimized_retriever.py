@@ -1,8 +1,3 @@
-"""
-Production-Grade Optimized Retrieval System
-Multi-stage retrieval with query expansion, re-ranking, and fusion.
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -10,16 +5,19 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 import re
 import json
 import hashlib
-from typing import List, Dict, Tuple, Optional, Any, Set
-from dataclasses import dataclass, field
+import time
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Any, Tuple, Generator
 from collections import defaultdict
 from functools import lru_cache
+from dataclasses import dataclass, field
 
 import numpy as np
 from sentence_transformers import SentenceTransformer, CrossEncoder
 from rank_bm25 import BM25Okapi
 import chromadb
 import ollama
+from neo4j import GraphDatabase
 
 from src.logger import get_logger
 from src.config import config
@@ -465,107 +463,283 @@ class ContextOptimizer:
         
         return ' '.join(result)
 
+class QueryPreprocessor:
+    """Enhance queries for better retrieval."""
+    
+    def __init__(self):
+        self.doc_aliases = {
+            'original': 'doc_001',
+            'first': 'doc_001',
+            'amendment': 'doc_002',
+            'restated': 'doc_004',
+            'ethiopian': 'doc_001',
+            'proclamation': 'doc_001',
+        }
+    
+    def enhance(self, query: str) -> str:
+        """Add context hints to query."""
+        enhanced = query
+        
+        # Add doc_id hints
+        for alias, doc_id in self.doc_aliases.items():
+            if alias in query.lower() and doc_id not in query:
+                enhanced = f"{enhanced} {doc_id}"
+        
+        # Add metadata hints
+        if any(kw in query.lower() for kw in ['effective date', 'date', 'when']):
+            if 'EFFECTIVE_DATE' not in enhanced:
+                enhanced = f"{enhanced} EFFECTIVE_DATE metadata"
+        
+        if any(kw in query.lower() for kw in ['doc_id', 'document id']):
+            if 'DOC_ID' not in enhanced:
+                enhanced = f"{enhanced} DOC_ID metadata"
+        
+        return enhanced
+
 
 class OptimizedQueryEngine:
     """
-    Complete optimized query engine with best-in-class retrieval.
+    Complete optimized query engine with caching and performance enhancements.
     """
+    
+    # Class-level BM25 cache (shared across instances)
+    _bm25_cache = None
+    _collection_cache = None
     
     def __init__(self):
         # Initialize components
-        self.chroma_client = chromadb.PersistentClient(path=str(config.paths.vectors_dir))
+        self.chroma_client = chromadb.PersistentClient(
+            path=str(config.paths.vectors_dir),
+            settings=chromadb.Settings(anonymized_telemetry=False)
+        )
         self.collection = self.chroma_client.get_collection("legal_clauses")
         self.embedder = SentenceTransformer(config.embedding.model_name)
         
         self.retriever = FusionRetriever(self.collection, self.embedder)
         self.optimizer = ContextOptimizer()
+        self.preprocessor = QueryPreprocessor()
         
-        # Graph connection (optional)
+        # Caches
+        self._answer_cache: Dict[str, Dict[str, Any]] = {}
+        self._embedding_cache: Dict[str, List[float]] = {}
+        self._cache_ttl = 3600  # 1 hour
+        self._max_cache_size = 200
+        
+        # Graph connection
         self.graph_enabled = False
         if config.neo4j.is_valid():
             try:
-                from neo4j import GraphDatabase
                 self.neo4j_driver = GraphDatabase.driver(
                     config.neo4j.uri,
-                    auth=(config.neo4j.user, config.neo4j.password)
+                    auth=(config.neo4j.user, config.neo4j.password),
+                    max_connection_lifetime=3600,
+                    max_connection_pool_size=5
                 )
                 self.neo4j_driver.verify_connectivity()
                 self.graph_enabled = True
                 logger.info("Graph features enabled")
-            except:
+            except Exception as e:
+                logger.warning(f"Graph unavailable: {e}")
                 self.neo4j_driver = None
         
         logger.info("Optimized Query Engine initialized")
     
+    def _get_cache_key(self, question: str, target_date: Optional[str]) -> str:
+        """Generate deterministic cache key."""
+        normalized = f"{question.strip().lower()}|{target_date or 'none'}"
+        return hashlib.md5(normalized.encode()).hexdigest()
+    
+    def _clean_expired_cache(self):
+        """Remove expired cache entries."""
+        now = datetime.now()
+        expired = []
+        for key, value in self._answer_cache.items():
+            if now > value.get('expires_at', now):
+                expired.append(key)
+        for key in expired:
+            del self._answer_cache[key]
+    
+    def _evict_lru_if_needed(self):
+        """Evict least recently used cache entries if over max size."""
+        if len(self._answer_cache) > self._max_cache_size:
+            # Remove oldest 20%
+            remove_count = int(self._max_cache_size * 0.2)
+            sorted_keys = sorted(
+                self._answer_cache.keys(),
+                key=lambda k: self._answer_cache[k].get('cached_at', datetime.min)
+            )
+            for key in sorted_keys[:remove_count]:
+                del self._answer_cache[key]
+    
+    @handle_errors(default_return=None)
+    def _get_cached_embedding(self, text: str) -> List[float]:
+        """Get cached embedding or compute and cache."""
+        cache_key = hashlib.md5(text[:500].encode()).hexdigest()
+        
+        if cache_key in self._embedding_cache:
+            return self._embedding_cache[cache_key]
+        
+        embedding = self.embedder.encode(text, normalize_embeddings=True).tolist()
+        
+        if len(self._embedding_cache) < 500:
+            self._embedding_cache[cache_key] = embedding
+        
+        return embedding
+    
     def answer(self, question: str, target_date: Optional[str] = None) -> Dict[str, Any]:
         """
-        Answer question with optimized retrieval.
+        Answer question with optimized retrieval and caching.
         """
-        with Timer("Optimized retrieval"):
-            # Multi-strategy retrieval
-            candidates = self.retriever.retrieve(
-                question,
-                top_k=15,
-                target_date=target_date,
-                use_expansion=True,
-                use_reranking=True
-            )
-            
-            if not candidates:
-                return {
-                    'answer': "No relevant documents found.",
-                    'sources': [],
-                    'confidence': 0.0
-                }
-            
-            # Resolve current versions via graph
-            if self.graph_enabled:
-                candidates = self._resolve_current_versions(candidates)
-            
-            # Deduplicate and prioritize
-            candidates = self.optimizer.deduplicate(candidates)
-            candidates = self.optimizer.prioritize_current(candidates)
-            
-            # Compress context
-            context = self.optimizer.compress_context(candidates, question)
-            
-            # Build sources
-            sources = [
-                {
-                    'chunk_id': c.chunk_id,
-                    'doc_id': c.doc_id,
-                    'effective_date': c.effective_date,
-                    'score': c.fusion_score,
-                    'is_current': c.is_current
-                }
-                for c in candidates[:5]
-            ]
+        # Preprocess query
+        enhanced_question = self.preprocessor.enhance(question)
+        
+        # Check cache
+        cache_key = self._get_cache_key(enhanced_question, target_date)
+        if cache_key in self._answer_cache:
+            cached = self._answer_cache[cache_key]
+            if datetime.now() < cached.get('expires_at', datetime.now()):
+                logger.info(f"Cache hit: {question[:50]}...")
+                result = cached['result'].copy()
+                result['cached'] = True
+                return result
+        
+        # Determine if query needs expansion
+        complex_keywords = ['compare', 'difference', 'change', 'history', 'evolution', 'amendment']
+        use_expansion = any(kw in question.lower() for kw in complex_keywords)
+        
+        # Adjust retrieval parameters
+        top_k = 20 if use_expansion else 12
+        
+        # Retrieval
+        retrieval_start = time.perf_counter()
+        candidates = self.retriever.retrieve(
+            enhanced_question,
+            top_k=top_k,
+            target_date=target_date,
+            use_expansion=use_expansion,
+            use_reranking=True
+        )
+        retrieval_time = time.perf_counter() - retrieval_start
+        
+        if not candidates:
+            return {
+                'answer': "No relevant documents found.",
+                'sources': [],
+                'confidence': 0.0,
+                'retrieval_time_ms': int(retrieval_time * 1000),
+                'cached': False
+            }
+        
+        # Resolve current versions via graph
+        if self.graph_enabled:
+            candidates = self._resolve_current_versions(candidates)
+        
+        # Deduplicate and prioritize
+        candidates = self.optimizer.deduplicate(candidates)
+        candidates = self.optimizer.prioritize_current(candidates)
+        
+        # Compress context
+        context = self.optimizer.compress_context(candidates, enhanced_question)
+        
+        # Build sources
+        sources = [
+            {
+                'chunk_id': c.chunk_id,
+                'doc_id': c.doc_id,
+                'effective_date': c.effective_date,
+                'score': round(c.fusion_score, 3),
+                'is_current': c.is_current
+            }
+            for c in candidates[:5]
+        ]
         
         # Generate answer
-        with Timer("LLM generation"):
-            prompt = self._build_prompt(question, context, target_date)
-            
-            response = ollama.generate(
-                model=config.ollama.model,
-                prompt=prompt,
-                options={"temperature": 0.1, "num_predict": 500}
-            )
-            
-            answer = response['response'].strip()
+        generation_start = time.perf_counter()
+        prompt = self._build_prompt(enhanced_question, context, target_date)
+        
+        response = ollama.generate(
+            model=config.ollama.model,
+            prompt=prompt,
+            options={
+                "temperature": 0.1,
+                "num_predict": 400 if use_expansion else 250,
+                "top_p": 0.9
+            }
+        )
+        generation_time = time.perf_counter() - generation_start
+        answer = response['response'].strip()
         
         # Calculate confidence
         confidence = self._calculate_confidence(candidates, answer)
         
-        return {
+        result = {
             'answer': answer,
             'sources': sources,
             'confidence': confidence,
             'retrieval_count': len(candidates),
-            'graph_used': self.graph_enabled
+            'graph_used': self.graph_enabled,
+            'retrieval_time_ms': int(retrieval_time * 1000),
+            'generation_time_ms': int(generation_time * 1000),
+            'total_time_ms': int((retrieval_time + generation_time) * 1000),
+            'cached': False,
+            'query_enhanced': enhanced_question != question
         }
+        
+        # Cache result
+        self._answer_cache[cache_key] = {
+            'result': result.copy(),
+            'cached_at': datetime.now(),
+            'expires_at': datetime.now() + timedelta(seconds=self._cache_ttl)
+        }
+        
+        # Cleanup cache periodically
+        if len(self._answer_cache) % 10 == 0:
+            self._clean_expired_cache()
+            self._evict_lru_if_needed()
+        
+        return result
     
-    def _resolve_current_versions(self, candidates: List[RetrievalCandidate]) -> List[RetrievalCandidate]:
+    def answer_stream(self, question: str, target_date: Optional[str] = None) -> Generator[str, None, None]:
+        """
+        Stream answer token by token for real-time UI.
+        """
+        enhanced_question = self.preprocessor.enhance(question)
+        
+        with Timer("Optimized retrieval", log=False):
+            candidates = self.retriever.retrieve(
+                enhanced_question,
+                top_k=10,
+                target_date=target_date,
+                use_expansion=False,
+                use_reranking=True
+            )
+        
+        if not candidates:
+            yield "No relevant documents found."
+            return
+        
+        if self.graph_enabled:
+            candidates = self._resolve_current_versions(candidates)
+        
+        candidates = self.optimizer.deduplicate(candidates)
+        context = self.optimizer.compress_context(candidates, enhanced_question)
+        prompt = self._build_prompt(enhanced_question, context, target_date)
+        
+        # Stream response
+        for chunk in ollama.generate(
+            model=config.ollama.model,
+            prompt=prompt,
+            options={"temperature": 0.1, "num_predict": 300},
+            stream=True
+        ):
+            if 'response' in chunk:
+                yield chunk['response']
+    
+    def _resolve_current_versions(self, candidates: List) -> List:
         """Use graph to mark current versions."""
+        if not self.neo4j_driver:
+            return candidates
+        
         with self.neo4j_driver.session() as session:
             for c in candidates:
                 result = session.run("""
@@ -582,27 +756,57 @@ class OptimizedQueryEngine:
     
     def _build_prompt(self, question: str, context: str, target_date: Optional[str]) -> str:
         """Build optimized prompt."""
-        date_context = f"Today's date is {target_date}." if target_date else "Use the most current information available."
-        return f"""[INST] You are a legal assistant. Answer the question using the context provided.
+        date_context = ""
+        if target_date:
+            date_context = f"Today's date is {target_date}. Use information effective on or before this date."
+        else:
+            date_context = "Use the most current information available."
+        
+        return f"""[INST] You are a precise legal assistant. Answer based ONLY on the context below.
 
 {date_context}
 
-CONTEXT FROM DOCUMENTS:
+CONTEXT:
 {context}
 
 Question: {question}
 
-IMPORTANT: The context contains document metadata and text. Extract the answer directly from the context. If you see a date like "2020-01-15" or a phrase like "effective date is...", use that exact information.
+Instructions:
+- Extract exact information from the context
+- If the answer is in metadata (EFFECTIVE_DATE, DOC_ID), use it
+- Be concise and specific
+- If not found, say "Not found in documents"
 
 Answer: [/INST]"""
     
-    def _calculate_confidence(self, candidates: List[RetrievalCandidate], answer: str) -> float:
+    def _calculate_confidence(self, candidates: List, answer: str) -> float:
         """Calculate answer confidence."""
         if not candidates:
             return 0.0
         
-        # Based on retrieval scores and answer length
-        avg_score = np.mean([c.fusion_score for c in candidates[:3]])
-        length_penalty = min(1.0, len(answer.split()) / 20)
+        # Top candidate scores
+        top_scores = [c.fusion_score for c in candidates[:3] if hasattr(c, 'fusion_score')]
+        avg_score = np.mean(top_scores) if top_scores else 0.5
         
-        return min(1.0, avg_score * length_penalty)
+        # Answer quality heuristics
+        length_score = min(1.0, len(answer.split()) / 15)
+        not_found_penalty = 0.3 if "not found" in answer.lower() else 1.0
+        
+        confidence = avg_score * length_score * not_found_penalty
+        
+        return round(min(1.0, max(0.1, confidence)), 3)
+    
+    def get_cache_stats(self) -> Dict[str, Any]:
+        """Return cache statistics."""
+        return {
+            'answer_cache_size': len(self._answer_cache),
+            'embedding_cache_size': len(self._embedding_cache),
+            'max_cache_size': self._max_cache_size,
+            'cache_ttl_seconds': self._cache_ttl
+        }
+    
+    def clear_cache(self):
+        """Clear all caches."""
+        self._answer_cache.clear()
+        self._embedding_cache.clear()
+        logger.info("All caches cleared")

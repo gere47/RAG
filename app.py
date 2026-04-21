@@ -24,9 +24,12 @@ import uuid
 import json
 from dataclasses import dataclass, field
 
-from src.query_engine import QueryEngine, QueryResult
 from src.config import config
 from src.logger import get_logger
+from src.optimized_retriever import OptimizedQueryEngine
+
+# Use OptimizedQueryEngine as the main engine
+QueryEngine = OptimizedQueryEngine
 from src.agentic_engine import AgenticQueryEngine
 from src.agentic_engine import MasterLegalAgent
 
@@ -36,6 +39,49 @@ logger = get_logger(__name__)
 # ============================================================================
 # PAGE CONFIGURATION
 # ============================================================================
+
+
+# ============================================================================
+# MODULE-LEVEL SESSION STATE INITIALIZATION
+# ============================================================================
+def _init_session_state():
+    """Initialize session state at module level."""
+    defaults = {
+        "messages": [],
+        "engine": None,
+        "manifest_df": pd.DataFrame(),
+        "show_timeline": False,
+        "target_date": None,
+        "use_specific_date": False,
+        "show_sources": True,
+        "show_metrics": True,
+        "agent": None
+    }
+    
+    for key, default_value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = default_value
+
+# Call it immediately
+_init_session_state()
+
+# Initialize engine if needed (cached)
+@st.cache_resource
+def get_engine():
+    """Get or create the query engine (cached across reruns)."""
+    from src.optimized_retriever import OptimizedQueryEngine
+    return OptimizedQueryEngine()
+
+if st.session_state.engine is None:
+    with st.spinner("🚀 Initializing LexTemporal AI..."):
+        st.session_state.engine = get_engine()
+        st.session_state.agent = st.session_state.engine
+
+# Load manifest if needed
+if st.session_state.manifest_df.empty:
+    manifest_path = config.paths.project_root / "document_manifest.csv"
+    if manifest_path.exists():
+        st.session_state.manifest_df = pd.read_csv(manifest_path)
 st.set_page_config(
     page_title="LexTemporal AI | Legal Intelligence",
     page_icon="⚖️",
@@ -544,37 +590,36 @@ class Message:
 
 def init_session_state():
     """Initialize all session state variables."""
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+    # Default values
+    defaults = {
+        "messages": [],
+        "engine": None,
+        "manifest_df": pd.DataFrame(),
+        "show_timeline": False,
+        "target_date": None,
+        "use_specific_date": False,
+        "show_sources": True,
+        "show_metrics": True,
+        "agent": None
+    }
     
-    if "engine" not in st.session_state:
+    for key, default_value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = default_value
+    
+    # Initialize engine if needed
+    if st.session_state.engine is None:
         with st.spinner("🚀 Initializing LexTemporal AI..."):
-            st.session_state.engine = QueryEngine()
+            from src.optimized_retriever import OptimizedQueryEngine
+            st.session_state.engine = OptimizedQueryEngine()
+            st.session_state.agent = st.session_state.engine
     
-        if "manifest_df" not in st.session_state:
-            manifest_path = config.paths.project_root / "document_manifest.csv"
+    # Load manifest if needed
+    if st.session_state.manifest_df.empty:
+        manifest_path = config.paths.project_root / "document_manifest.csv"
         if manifest_path.exists():
             st.session_state.manifest_df = pd.read_csv(manifest_path)
-        else:
-            st.session_state.manifest_df = pd.DataFrame()
-    
-    if "show_timeline" not in st.session_state:
-        st.session_state.show_timeline = False
-    
-    if "target_date" not in st.session_state:
-        st.session_state.target_date = None
-    
-    if "use_specific_date" not in st.session_state:
-        st.session_state.use_specific_date = False
-    
-    if "show_sources" not in st.session_state:
-        st.session_state.show_sources = True
-    
-    if "show_metrics" not in st.session_state:
-        st.session_state.show_metrics = True
-    if "engine" not in st.session_state:
-        with st.spinner("🚀 Initializing LexTemporal AI Agent..."):
-            st.session_state.engine = AgenticQueryEngine()
+    # =============================================
 
 
 # ============================================================================
@@ -662,23 +707,28 @@ def render_sidebar():
         # Temporal Controls
         st.markdown("### ⏳ Temporal Context")
         
-        st.session_state.use_specific_date = st.checkbox(
+        # ===== FIXED: Use local variable, not session state directly =====
+        use_specific = st.checkbox(
             "Use specific effective date",
-            value=st.session_state.use_specific_date,
-            help="Filter documents effective on or before this date"
+            value=st.session_state.get("use_specific_date", False),
+            help="Filter documents effective on or before this date",
+            key="use_specific_checkbox"
         )
+        st.session_state.use_specific_date = use_specific
         
-        if st.session_state.use_specific_date:
+        if use_specific:
             target_date = st.date_input(
                 "Effective Date",
                 value=date(2026, 4, 13),
-                help="Documents effective after this date are treated as future/inactive"
+                help="Documents effective after this date are treated as future/inactive",
+                key="target_date_input"
             )
             st.session_state.target_date = str(target_date)
             st.info(f"📅 Showing documents effective ≤ {target_date}")
         else:
             st.session_state.target_date = None
             st.success("📅 Showing current/latest versions")
+        # =================================================================
         
         st.divider()
         
@@ -686,9 +736,9 @@ def render_sidebar():
         st.markdown("### 📅 Document Evolution")
         
         if st.button("📈 Show Timeline", use_container_width=True):
-            st.session_state.show_timeline = not st.session_state.show_timeline
+            st.session_state.show_timeline = not st.session_state.get("show_timeline", False)
         
-        if st.session_state.show_timeline and not st.session_state.manifest_df.empty:
+        if st.session_state.get("show_timeline", False) and not st.session_state.get("manifest_df", pd.DataFrame()).empty:
             render_timeline()
         
         st.divider()
@@ -706,9 +756,9 @@ def render_sidebar():
         if uploaded_file:
             with st.expander("📝 Document Details", expanded=True):
                 doc_title = st.text_input("Title", value=uploaded_file.name.replace('.pdf', ''))
-                effective_date = st.date_input("Effective Date", value=date.today())
+                effective_date = st.date_input("Effective Date", value=date.today(), key="upload_effective_date")
                 
-                manifest = st.session_state.manifest_df
+                manifest = st.session_state.get("manifest_df", pd.DataFrame())
                 options = ["None"] + (manifest['doc_id'].tolist() if not manifest.empty else [])
                 supersedes = st.selectbox("Supersedes", options=options)
                 
@@ -720,18 +770,31 @@ def render_sidebar():
         
         # Display Options
         st.markdown("### 🎛️ Display Options")
-        st.session_state.show_sources = st.checkbox("Show source citations", value=True)
-        st.session_state.show_metrics = st.checkbox("Show response metrics", value=True)
+        
+        show_sources = st.checkbox(
+            "Show source citations",
+            value=st.session_state.get("show_sources", True),
+            key="show_sources_checkbox"
+        )
+        st.session_state.show_sources = show_sources
+        
+        show_metrics = st.checkbox(
+            "Show response metrics",
+            value=st.session_state.get("show_metrics", True),
+            key="show_metrics_checkbox"
+        )
+        st.session_state.show_metrics = show_metrics
         
         st.divider()
         
         # System Stats
         st.markdown("### 📊 System Stats")
         
-        engine = st.session_state.engine
-        st.metric("Vector DB", f"{engine.collection.count():,} chunks")
-        st.metric("Graph DB", "Connected" if engine.graph_enabled else "Disabled")
-        st.metric("Model", config.ollama.model)
+        engine = st.session_state.get("engine")
+        if engine:
+            st.metric("Vector DB", f"{engine.collection.count():,} chunks")
+            st.metric("Graph DB", "Connected" if getattr(engine, 'graph_enabled', False) else "Disabled")
+            st.metric("Model", getattr(getattr(engine, 'config', None), 'ollama', type('', (), {'model': 'llama3.2:3b'})()).model)
         
         st.divider()
         
@@ -906,16 +969,9 @@ def init_session_state():
 
 def main():
     """Main application entry point."""
-    init_session_state()
     
     render_hero()
     render_sidebar()
-
-    if prompt := st.chat_input("Ask anything..."):
-        result = st.session_state.agent.process(
-        prompt, 
-        mode=st.session_state.agent_mode
-        )
     
     if st.session_state.show_metrics:
         render_metrics()
@@ -939,13 +995,7 @@ def main():
             st.markdown(f'<div class="user-message">{prompt}</div>', unsafe_allow_html=True)
         
         with st.chat_message("assistant"):
-            with st.spinner(""):
-                st.markdown("""
-                <div class="typing-indicator">
-                    <span></span><span></span><span></span>
-                </div>
-                """, unsafe_allow_html=True)
-                
+            with st.spinner("🔍 Analyzing..."):
                 result = st.session_state.engine.answer(
                     prompt,
                     target_date=st.session_state.target_date
