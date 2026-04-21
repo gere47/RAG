@@ -238,7 +238,7 @@ class VectorIndexBuilder:
         count = self.collection.count()
         
         # Get storage size
-        vector_path = config.VECTORS_DIR
+        vector_path = config.paths.vectors_dir
         total_size = sum(f.stat().st_size for f in vector_path.rglob('*') if f.is_file())
         
         return {

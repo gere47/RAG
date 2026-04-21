@@ -200,19 +200,16 @@ class SemanticChunker:
     
     @handle_errors(default_return=[])
     def chunk_document(self, doc_id: str, doc_title: str, effective_date: str, 
-                       text: str) -> List[Chunk]:
+                    text: str) -> List[Chunk]:
         """
         Chunk a single document and return structured Chunk objects.
-        
-        Args:
-            doc_id: Document identifier
-            doc_title: Document title
-            effective_date: Effective date
-            text: Full document text
-            
-        Returns:
-            List of Chunk objects
         """
+        # Extract FULL metadata header
+        metadata_header = ""
+        if '[DOCUMENT METADATA]' in text and '[END METADATA]' in text:
+            metadata_header = text.split('[DOCUMENT METADATA]')[1].split('[END METADATA]')[0]
+            metadata_header = f"[DOCUMENT METADATA]\n{metadata_header}[END METADATA]\n"
+        
         # Remove metadata header before chunking
         if '[END METADATA]' in text:
             text = text.split('[END METADATA]')[-1]
@@ -230,17 +227,24 @@ class SemanticChunker:
         total = len(raw_chunks)
         
         for i, chunk_text in enumerate(raw_chunks):
+            # ===== FIX: Prepend full metadata to every chunk =====
+            if metadata_header:
+                enriched_text = metadata_header + chunk_text
+            else:
+                enriched_text = f"[DOCUMENT: {doc_id} | EFFECTIVE DATE: {effective_date}]\n{chunk_text}"
+            # =====================================================
+            
             chunk = Chunk(
                 chunk_id=f"{doc_id}_chunk_{i+1:03d}",
                 doc_id=doc_id,
                 effective_date=effective_date,
                 chunk_index=i,
                 total_chunks=total,
-                text=chunk_text,
-                char_count=len(chunk_text),
-                word_count=self._count_words(chunk_text),
+                text=enriched_text,  # ← Use enriched text
+                char_count=len(enriched_text),
+                word_count=self._count_words(enriched_text),
                 section_headers=self._extract_section_headers(chunk_text),
-                chunk_hash=self._compute_chunk_hash(chunk_text),
+                chunk_hash=self._compute_chunk_hash(enriched_text),
                 created_at=datetime.now().isoformat()
             )
             chunks.append(chunk)
@@ -282,7 +286,7 @@ def main():
     )
     
     # Find all processed text files
-    txt_files = list(config.PROCESSED_TEXTS_DIR.glob("*.txt"))
+    txt_files = list(config.paths.processed_texts_dir.glob("*.txt"))
     
     if not txt_files:
         logger.error("No processed text files found")
@@ -311,8 +315,8 @@ def main():
                 logger.error(f"Failed to chunk {txt_path.name}: {e}")
     
     # Save chunks
-    config.CHUNKS_DIR.mkdir(parents=True, exist_ok=True)
-    chunks_path = config.CHUNKS_DIR / "clauses.json"
+    config.paths.chunks_dir.mkdir(parents=True, exist_ok=True)
+    chunks_path = config.paths.chunks_dir / "clauses.json"
     safe_json_dump(all_chunks, chunks_path)
     
     # Save statistics
@@ -329,7 +333,7 @@ def main():
         'document_stats': doc_stats
     }
     
-    stats_path = config.CHUNKS_DIR / "chunking_stats.json"
+    stats_path = config.paths.chunks_dir / "chunking_stats.json"
     safe_json_dump(stats, stats_path)
     
     logger.info(f"✅ Created {len(all_chunks)} chunks from {len(doc_stats)} documents")

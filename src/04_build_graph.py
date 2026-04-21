@@ -299,7 +299,7 @@ class Neo4jGraphBuilder:
         
         # Load data
         chunks_path = chunks_path or config.paths.chunks_dir / "clauses.json"
-        manifest_path = manifest_path or config.manifest_path
+        manifest_path = manifest_path or config.paths.project_root / "document_manifest.csv"
         
         if not chunks_path.exists():
             logger.error(f"Chunks not found: {chunks_path}")
@@ -358,7 +358,7 @@ class Neo4jGraphBuilder:
             'final_stats': stats
         }
         
-        report_path = config.PROCESSED_TEXTS_DIR / "graph_build_report.json"
+        report_path = config.paths.processed_texts_dir / "graph_build_report.json"
         safe_json_dump(report, report_path)
         
         logger.info(f"✅ Graph build complete in {build_time:.1f}s")

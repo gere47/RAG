@@ -19,6 +19,9 @@ import numpy as np
 from sentence_transformers import SentenceTransformer, CrossEncoder
 from neo4j import GraphDatabase
 from rank_bm25 import BM25Okapi
+from src.contradiction_detector import create_contradiction_detector
+from src.optimized_retriever import OptimizedQueryEngine
+from src.agentic_engine import AgenticQueryEngine
 
 from src.logger import get_logger
 from src.config import config
@@ -185,6 +188,10 @@ class ReRanker:
         return ranked[:top_k]
 
 
+class QueryEngine(OptimizedQueryEngine):
+    """Backward-compatible wrapper."""
+    pass
+
 class QueryEngine:
     """Main query engine with graph-grounded temporal awareness."""
     
@@ -195,6 +202,17 @@ class QueryEngine:
         self._init_graph_db()
         self._init_models()
         self._init_retriever()
+        # Initialize contradiction detector
+        try:
+            from src.contradiction_detector import create_contradiction_detector
+            self.contradiction_detector = create_contradiction_detector(
+                neo4j_driver=self.neo4j_driver if self.graph_enabled else None,
+                embedding_model=self.embedder
+            )
+            logger.info("Contradiction detector initialized")
+        except Exception as e:
+            logger.warning(f"Contradiction detector unavailable: {e}")
+            self.contradiction_detector = None
         
         logger.info("QueryEngine initialized successfully")
     def _init_vector_db(self):
@@ -386,8 +404,44 @@ Provide a clear, direct answer using only information from the context. [/INST]"
             "total_time_ms": total_time,
             "timestamp": datetime.now().isoformat()
         }
+    def answer_with_contradiction_awareness(self, question: str, target_date: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Answer question with full contradiction detection and explanation.
+        """
+        # Get standard answer
+        result = self.answer(question, target_date)
+        
+        # Detect contradictions if detector is available
+        if hasattr(self, 'contradiction_detector') and self.contradiction_detector:
+            try:
+                report = self.contradiction_detector.analyze(question, target_date)
+                
+                if report.has_contradiction:
+                    result['answer'] = self.contradiction_detector.enhance_answer(
+                        result['answer'], 
+                        report
+                    )
+                
+                result['contradiction'] = {
+                    'detected': report.has_contradiction,
+                    'type': report.contradiction_type,
+                    'explanation': report.explanation,
+                    'confidence': report.confidence,
+                    'versions_found': len(report.versions_found),
+                    'current_version': report.current_version.chunk_id if report.current_version else None,
+                    'historical_versions': [v.chunk_id for v in report.historical_versions],
+                    'graph_path': report.graph_path
+                }
+            except Exception as e:
+                logger.warning(f"Contradiction analysis failed: {e}")
+                result['contradiction'] = {'detected': False, 'error': str(e)}
+        else:
+            result['contradiction'] = {'detected': False, 'error': 'Detector unavailable'}
+        
+        return result
 
 
+# This function stays OUTSIDE the class (no change)
 def query(question: str, target_date: Optional[str] = None) -> str:
     """Quick query interface."""
     engine = QueryEngine()

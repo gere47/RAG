@@ -314,3 +314,29 @@ EM... → 79328ms
 2026-04-13 11:18:18 | INFO     | src.query_engine | answer | Query: what are the main points or concepts of this docum... → 32887ms
 2026-04-13 11:20:41 | INFO     | src.query_engine | answer | Query: so ask me from the documents and you will test my ... → 82914ms
 2026-04-13 11:21:48 | INFO     | src.query_engine | answer | Query: 10... → 37304ms
+2026-04-13 11:39:02 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 11:39:04 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-13 11:39:16 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 11:39:18 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 11:39:18 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 11:44:11 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 11:44:15 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-13 11:44:29 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 11:44:30 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 11:44:30 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 11:45:47 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 11:45:51 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-13 11:46:04 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 11:46:06 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 11:46:06 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-13 11:47:04 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-13 11:47:08 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-13 11:47:20 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-13 11:47:22 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-13 11:47:22 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully

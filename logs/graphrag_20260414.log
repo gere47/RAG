@@ -1,0 +1,93 @@
+2026-04-14 16:36:32 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 16:36:36 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-14 16:36:45 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 16:36:47 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 16:36:47 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:02:08 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:02:12 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-14 17:02:21 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 17:02:22 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 17:02:26 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-14 17:02:26 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-14 17:02:26 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:04:58 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:05:02 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-14 17:05:11 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 17:05:12 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 17:05:16 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-14 17:05:16 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-14 17:05:16 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:12:03 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:12:05 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:12:15 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 17:12:16 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 17:12:16 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-14 17:12:16 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:15:42 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:15:44 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:15:54 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 17:15:55 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 17:15:55 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-14 17:15:55 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:17:18 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:17:20 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:17:28 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 17:17:29 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 17:17:29 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-14 17:17:29 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:24:57 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:24:59 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:25:09 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 17:25:10 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 17:25:10 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-14 17:25:10 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:26:19 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:26:21 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:26:30 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 17:26:31 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 17:26:31 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-14 17:26:31 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:28:12 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:28:14 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:28:26 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 17:28:28 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 17:28:28 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-14 17:28:28 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:28:48 | INFO     | src.query_engine | answer | Query: What is the penalty fee?... → 20241ms
+2026-04-14 17:28:48 | ERROR    | src.utils | wrapper | Error in find_all_versions_by_keyword: {code: Neo.ClientError.Statement.SyntaxError} {message: In a WITH/RETURN with DISTINCT or an aggregation, it is not possible to access variables declared before the WITH/RETURN: c (line 10, column 26 (offset: 416))
+"                ORDER BY c.effective_date"
+                          ^}
+2026-04-14 17:34:32 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:34:34 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:34:46 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-14 17:34:48 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-14 17:34:48 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-14 17:34:48 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-14 17:35:06 | INFO     | src.query_engine | answer | Query: What is the effective date?... → 17566ms
+2026-04-14 17:35:06 | ERROR    | src.utils | wrapper | Error in find_all_versions_by_keyword: {code: Neo.ClientError.Statement.SyntaxError} {message: In a WITH/RETURN with DISTINCT or an aggregation, it is not possible to access variables declared before the WITH/RETURN: c (line 9, column 26 (offset: 336))
+"                ORDER BY c.effective_date"
+                          ^}
+2026-04-14 17:37:29 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:37:31 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:39:20 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:39:22 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:41:22 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:41:24 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:44:42 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:44:44 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:45:44 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:45:46 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:47:28 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:47:30 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-14 17:48:47 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-14 17:48:50 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687

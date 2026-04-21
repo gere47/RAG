@@ -1,0 +1,269 @@
+2026-04-21 06:29:28 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-21 06:29:32 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-21 06:29:40 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-21 06:29:41 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-21 06:29:45 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 06:29:45 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-21 06:29:45 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-21 06:34:29 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-21 06:34:31 | INFO     | src.query_engine | _init_graph_db | Connected to Neo4j: bolt://localhost:7687
+2026-04-21 06:34:38 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-21 06:34:39 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-21 06:34:39 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-21 06:34:39 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-21 06:43:52 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-21 06:43:56 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-21 06:44:04 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-21 06:44:05 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-21 06:44:09 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 06:44:09 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-21 06:44:09 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-21 06:44:14 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-21 06:44:19 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-21 06:44:24 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-21 06:44:25 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-21 06:44:29 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 06:44:29 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-21 06:44:29 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-21 06:44:30 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-21 06:44:34 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-21 06:44:39 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-21 06:44:40 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-21 06:44:44 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 06:44:44 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-21 06:44:44 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-21 06:44:45 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-21 06:44:49 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-21 06:44:54 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-21 06:44:56 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-21 06:45:00 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 06:45:00 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-21 06:45:00 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-21 06:49:20 | INFO     | src.query_engine | answer | Query: What is the effective date?... → 259629ms
+2026-04-21 06:52:56 | INFO     | src.query_engine | answer | Query: What is the effective date?... → 216725ms
+2026-04-21 06:52:56 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-21 06:53:00 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-21 06:53:07 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-21 06:53:08 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-21 06:53:12 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 06:53:12 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-21 06:53:12 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-21 06:53:14 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-21 06:53:18 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-21 06:53:23 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-21 06:53:23 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-21 06:53:27 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 06:53:27 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-21 06:53:27 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-21 06:57:19 | INFO     | src.query_engine | answer | Query: What is the effective date?... → 231872ms
+2026-04-21 06:57:19 | INFO     | src.query_engine | _init_vector_db | Connected to ChromaDB: 3108 documents
+2026-04-21 06:57:24 | WARNING  | src.query_engine | _init_graph_db | Neo4j connection failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it). Graph features disabled.
+2026-04-21 06:57:30 | INFO     | src.query_engine | __init__ | Loaded reranker: cross-encoder/ms-marco-MiniLM-L-6-v2
+2026-04-21 06:57:31 | INFO     | src.query_engine | _build_index | Built BM25 index with 3108 documents
+2026-04-21 06:57:35 | WARNING  | src.contradiction_detector | _init_connections | Neo4j unavailable: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 06:57:35 | INFO     | src.query_engine | __init__ | Contradiction detector initialized
+2026-04-21 06:57:35 | INFO     | src.query_engine | __init__ | QueryEngine initialized successfully
+2026-04-21 06:57:39 | INFO     | src.query_engine | answer | Query: What is the effective date?... → 3939ms
+2026-04-21 06:57:43 | INFO     | src.query_engine | answer | Query: What is the effective date?... → 3644ms
+2026-04-21 06:57:46 | INFO     | src.query_engine | answer | Query: What is the effective date?... → 2851ms
+2026-04-21 07:14:08 | INFO     | src.optimized_retriever | _build_index | BM25 index built: 3108 documents
+2026-04-21 07:14:15 | INFO     | src.optimized_retriever | __init__ | Optimized Query Engine initialized
+2026-04-21 07:15:04 | INFO     | src.utils | __exit__ | Optimized retrieval completed in 48.55s
+2026-04-21 07:16:01 | INFO     | src.utils | __exit__ | LLM generation completed in 57.00s
+2026-04-21 07:19:57 | INFO     | src.optimized_retriever | _build_index | BM25 index built: 3108 documents
+2026-04-21 07:20:04 | INFO     | src.optimized_retriever | __init__ | Optimized Query Engine initialized
+2026-04-21 07:22:05 | INFO     | src.optimized_retriever | _build_index | BM25 index built: 3108 documents
+2026-04-21 07:22:12 | INFO     | src.optimized_retriever | __init__ | Optimized Query Engine initialized
+2026-04-21 07:26:04 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:26:04 | INFO     | __main__ | main | Phase 2: Production Semantic Chunker
+2026-04-21 07:26:04 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:26:29 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:26:29 | INFO     | __main__ | main | Phase 5: Production Vector Index Builder
+2026-04-21 07:26:29 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:26:35 | INFO     | __main__ | _initialize | Loaded embedding model: all-MiniLM-L6-v2
+2026-04-21 07:26:35 | INFO     | __main__ | build | Loaded 3108 chunks
+2026-04-21 07:26:36 | INFO     | __main__ | _get_or_create_collection | Deleted existing collection: legal_clauses
+2026-04-21 07:26:36 | INFO     | __main__ | _get_or_create_collection | Created new collection: legal_clauses
+2026-04-21 07:26:36 | INFO     | __main__ | index_chunks | Indexing 3108 chunks in 32 batches
+2026-04-21 07:27:36 | INFO     | src.utils | __exit__ | Vector indexing completed in 60.94s
+2026-04-21 07:27:44 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:27:44 | INFO     | __main__ | main | Phase 2: Production Semantic Chunker
+2026-04-21 07:27:44 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:27:44 | INFO     | __main__ | main | Found 9 processed documents
+2026-04-21 07:27:45 | WARNING  | __main__ | chunk_document | No valid chunks generated for doc_a540bf45
+2026-04-21 07:27:45 | INFO     | src.utils | __exit__ | Chunking all documents completed in 1.62s
+2026-04-21 07:28:17 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:28:17 | INFO     | __main__ | main | Phase 5: Production Vector Index Builder
+2026-04-21 07:28:17 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:28:23 | INFO     | __main__ | _initialize | Loaded embedding model: all-MiniLM-L6-v2
+2026-04-21 07:28:23 | INFO     | __main__ | build | Loaded 3108 chunks
+2026-04-21 07:28:23 | INFO     | __main__ | _get_or_create_collection | Deleted existing collection: legal_clauses
+2026-04-21 07:28:23 | INFO     | __main__ | _get_or_create_collection | Created new collection: legal_clauses
+2026-04-21 07:28:23 | INFO     | __main__ | index_chunks | Indexing 3108 chunks in 32 batches
+2026-04-21 07:29:25 | INFO     | src.utils | __exit__ | Vector indexing completed in 61.73s
+2026-04-21 07:29:32 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:29:32 | INFO     | __main__ | main | Phase 2: Production Semantic Chunker
+2026-04-21 07:29:32 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:29:32 | INFO     | __main__ | main | Found 9 processed documents
+2026-04-21 07:29:33 | WARNING  | __main__ | chunk_document | No valid chunks generated for doc_a540bf45
+2026-04-21 07:29:33 | INFO     | src.utils | __exit__ | Chunking all documents completed in 1.21s
+2026-04-21 07:30:00 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:30:00 | INFO     | __main__ | main | Phase 5: Production Vector Index Builder
+2026-04-21 07:30:00 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:30:06 | INFO     | __main__ | _initialize | Loaded embedding model: all-MiniLM-L6-v2
+2026-04-21 07:30:06 | INFO     | __main__ | build | Loaded 3108 chunks
+2026-04-21 07:30:06 | INFO     | __main__ | _get_or_create_collection | Deleted existing collection: legal_clauses
+2026-04-21 07:30:06 | INFO     | __main__ | _get_or_create_collection | Created new collection: legal_clauses
+2026-04-21 07:30:06 | INFO     | __main__ | index_chunks | Indexing 3108 chunks in 32 batches
+2026-04-21 07:34:21 | INFO     | src.utils | __exit__ | Vector indexing completed in 254.59s
+2026-04-21 07:34:25 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:34:25 | INFO     | __main__ | main | Phase 4: Production Graph Builder
+2026-04-21 07:34:25 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:34:29 | WARNING  | __main__ | _connect | Connection attempt 1 failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 07:34:35 | WARNING  | __main__ | _connect | Connection attempt 2 failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 07:34:42 | WARNING  | __main__ | _connect | Connection attempt 3 failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 07:34:42 | ERROR    | __main__ | _connect | Failed to connect to Neo4j after retries
+2026-04-21 07:35:12 | INFO     | src.optimized_retriever | _build_index | BM25 index built: 3108 documents
+2026-04-21 07:35:18 | INFO     | src.optimized_retriever | __init__ | Optimized Query Engine initialized
+2026-04-21 07:36:06 | INFO     | src.utils | __exit__ | Optimized retrieval completed in 47.21s
+2026-04-21 07:36:43 | INFO     | src.utils | __exit__ | LLM generation completed in 37.07s
+2026-04-21 07:45:51 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:45:51 | INFO     | __main__ | main | Phase 2: Production Semantic Chunker
+2026-04-21 07:45:51 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:45:51 | INFO     | __main__ | main | Found 9 processed documents
+2026-04-21 07:45:53 | WARNING  | __main__ | chunk_document | No valid chunks generated for doc_a540bf45
+2026-04-21 07:45:53 | INFO     | src.utils | __exit__ | Chunking all documents completed in 1.75s
+2026-04-21 07:46:18 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:46:18 | INFO     | __main__ | main | Phase 5: Production Vector Index Builder
+2026-04-21 07:46:18 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:46:24 | INFO     | __main__ | _initialize | Loaded embedding model: all-MiniLM-L6-v2
+2026-04-21 07:46:25 | INFO     | __main__ | build | Loaded 3108 chunks
+2026-04-21 07:46:25 | INFO     | __main__ | _get_or_create_collection | Deleted existing collection: legal_clauses
+2026-04-21 07:46:25 | INFO     | __main__ | _get_or_create_collection | Created new collection: legal_clauses
+2026-04-21 07:46:25 | INFO     | __main__ | index_chunks | Indexing 3108 chunks in 32 batches
+2026-04-21 07:47:57 | INFO     | src.utils | __exit__ | Vector indexing completed in 92.26s
+2026-04-21 07:48:05 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:48:05 | INFO     | __main__ | main | Phase 2: Production Semantic Chunker
+2026-04-21 07:48:05 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:48:05 | INFO     | __main__ | main | Found 9 processed documents
+2026-04-21 07:48:07 | WARNING  | __main__ | chunk_document | No valid chunks generated for doc_a540bf45
+2026-04-21 07:48:07 | INFO     | src.utils | __exit__ | Chunking all documents completed in 2.10s
+2026-04-21 07:48:08 | INFO     | __main__ | main | ✅ Created 3108 chunks from 8 documents
+2026-04-21 07:48:08 | INFO     | __main__ | main | 📁 Chunks: D:\Graphbased_temporal_RAG\data\chunks\clauses.json
+2026-04-21 07:48:08 | INFO     | __main__ | main | 📊 Stats: D:\Graphbased_temporal_RAG\data\chunks\chunking_stats.json
+2026-04-21 07:48:08 | INFO     | __main__ | main | 📊 Average chunks per document: 388.5
+2026-04-21 07:48:34 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:48:34 | INFO     | __main__ | main | Phase 5: Production Vector Index Builder
+2026-04-21 07:48:34 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:48:40 | INFO     | __main__ | _initialize | Loaded embedding model: all-MiniLM-L6-v2
+2026-04-21 07:48:41 | INFO     | __main__ | build | Loaded 3108 chunks
+2026-04-21 07:48:41 | INFO     | __main__ | _get_or_create_collection | Deleted existing collection: legal_clauses
+2026-04-21 07:48:41 | INFO     | __main__ | _get_or_create_collection | Created new collection: legal_clauses
+2026-04-21 07:48:41 | INFO     | __main__ | index_chunks | Indexing 3108 chunks in 32 batches
+2026-04-21 07:54:05 | INFO     | src.utils | __exit__ | Vector indexing completed in 324.85s
+2026-04-21 07:54:06 | INFO     | __main__ | build | ✅ Index build complete in 325.7s
+2026-04-21 07:54:06 | INFO     | __main__ | build |    Chunks indexed: 3108/3108
+2026-04-21 07:54:06 | INFO     | __main__ | build |    Collection size: 134.61 MB
+2026-04-21 07:54:06 | INFO     | __main__ | build | 📊 Report: D:\Graphbased_temporal_RAG\data\vectors\index_build_report.json
+2026-04-21 07:54:06 | INFO     | __main__ | main | ✅ Successfully indexed 3108 chunks
+2026-04-21 07:54:11 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:54:11 | INFO     | __main__ | main | Phase 4: Production Graph Builder
+2026-04-21 07:54:11 | INFO     | __main__ | main | ============================================================
+2026-04-21 07:54:15 | WARNING  | __main__ | _connect | Connection attempt 1 failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 07:54:21 | WARNING  | __main__ | _connect | Connection attempt 2 failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 07:54:27 | WARNING  | __main__ | _connect | Connection attempt 3 failed: Couldn't connect to localhost:7687 (resolved to ()):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] No connection could be made because the target machine actively refused it)
+2026-04-21 07:54:27 | ERROR    | __main__ | _connect | Failed to connect to Neo4j after retries
+2026-04-21 07:55:06 | INFO     | src.optimized_retriever | _build_index | BM25 index built: 3108 documents
+2026-04-21 07:55:13 | INFO     | src.optimized_retriever | __init__ | Optimized Query Engine initialized
+2026-04-21 07:56:02 | INFO     | src.utils | __exit__ | Optimized retrieval completed in 49.36s
+2026-04-21 07:56:54 | INFO     | src.utils | __exit__ | LLM generation completed in 51.51s
+2026-04-21 08:00:37 | INFO     | __main__ | main | ============================================================
+2026-04-21 08:00:37 | INFO     | __main__ | main | Phase 2: Production Semantic Chunker
+2026-04-21 08:00:37 | INFO     | __main__ | main | ============================================================
+2026-04-21 08:00:37 | INFO     | __main__ | main | Found 9 processed documents
+2026-04-21 08:00:39 | WARNING  | __main__ | chunk_document | No valid chunks generated for doc_a540bf45
+2026-04-21 08:00:39 | INFO     | src.utils | __exit__ | Chunking all documents completed in 2.52s
+2026-04-21 08:00:40 | INFO     | __main__ | main | ✅ Created 3108 chunks from 8 documents
+2026-04-21 08:00:40 | INFO     | __main__ | main | 📁 Chunks: D:\Graphbased_temporal_RAG\data\chunks\clauses.json
+2026-04-21 08:00:40 | INFO     | __main__ | main | 📊 Stats: D:\Graphbased_temporal_RAG\data\chunks\chunking_stats.json
+2026-04-21 08:00:40 | INFO     | __main__ | main | 📊 Average chunks per document: 388.5
+2026-04-21 08:01:15 | INFO     | __main__ | main | ============================================================
+2026-04-21 08:01:15 | INFO     | __main__ | main | Phase 5: Production Vector Index Builder
+2026-04-21 08:01:15 | INFO     | __main__ | main | ============================================================
+2026-04-21 08:01:22 | INFO     | __main__ | _initialize | Loaded embedding model: all-MiniLM-L6-v2
+2026-04-21 08:01:23 | INFO     | __main__ | build | Loaded 3108 chunks
+2026-04-21 08:01:23 | INFO     | __main__ | _get_or_create_collection | Deleted existing collection: legal_clauses
+2026-04-21 08:01:23 | INFO     | __main__ | _get_or_create_collection | Created new collection: legal_clauses
+2026-04-21 08:01:23 | INFO     | __main__ | index_chunks | Indexing 3108 chunks in 32 batches
+2026-04-21 08:07:15 | INFO     | src.utils | __exit__ | Vector indexing completed in 352.63s
+2026-04-21 08:07:16 | INFO     | __main__ | build | ✅ Index build complete in 353.7s
+2026-04-21 08:07:16 | INFO     | __main__ | build |    Chunks indexed: 3108/3108
+2026-04-21 08:07:16 | INFO     | __main__ | build |    Collection size: 165.86 MB
+2026-04-21 08:07:16 | INFO     | __main__ | build | 📊 Report: D:\Graphbased_temporal_RAG\data\vectors\index_build_report.json
+2026-04-21 08:07:16 | INFO     | __main__ | main | ✅ Successfully indexed 3108 chunks
+2026-04-21 08:07:23 | INFO     | __main__ | main | ============================================================
+2026-04-21 08:07:23 | INFO     | __main__ | main | Phase 4: Production Graph Builder
+2026-04-21 08:07:23 | INFO     | __main__ | main | ============================================================
+2026-04-21 08:07:25 | INFO     | __main__ | _connect | Connected to Neo4j: bolt://localhost:7687
+2026-04-21 08:07:26 | INFO     | __main__ | build | Loaded 3108 chunks from 9 documents
+2026-04-21 08:07:34 | INFO     | __main__ | clear_database | Database cleared
+2026-04-21 08:07:35 | INFO     | __main__ | create_indexes | Indexes created
+2026-04-21 08:08:25 | INFO     | __main__ | build | Created 3108 Clause nodes
+2026-04-21 08:09:34 | INFO     | __main__ | build | Created 956698 SUPERSEDES relationships
+2026-04-21 08:09:42 | INFO     | __main__ | create_amendment_relationships | Created 0 AMENDS relationships
+2026-04-21 08:09:42 | INFO     | src.utils | __exit__ | Graph building completed in 136.03s
+2026-04-21 08:19:34 | INFO     | src.optimized_retriever | _build_index | BM25 index built: 3108 documents
+2026-04-21 08:19:39 | INFO     | src.optimized_retriever | __init__ | Graph features enabled
+2026-04-21 08:19:39 | INFO     | src.optimized_retriever | __init__ | Optimized Query Engine initialized
+2026-04-21 08:21:04 | INFO     | src.optimized_retriever | _build_index | BM25 index built: 3108 documents
+2026-04-21 08:21:09 | INFO     | src.optimized_retriever | __init__ | Graph features enabled
+2026-04-21 08:21:09 | INFO     | src.optimized_retriever | __init__ | Optimized Query Engine initialized
+2026-04-21 08:22:15 | INFO     | src.utils | __exit__ | Optimized retrieval completed in 66.18s
+2026-04-21 08:22:51 | INFO     | src.utils | __exit__ | LLM generation completed in 36.32s
+2026-04-21 08:24:54 | INFO     | src.optimized_retriever | _build_index | BM25 index built: 3108 documents
+2026-04-21 08:24:59 | INFO     | src.optimized_retriever | __init__ | Graph features enabled
+2026-04-21 08:24:59 | INFO     | src.optimized_retriever | __init__ | Optimized Query Engine initialized

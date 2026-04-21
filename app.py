@@ -27,6 +27,9 @@ from dataclasses import dataclass, field
 from src.query_engine import QueryEngine, QueryResult
 from src.config import config
 from src.logger import get_logger
+from src.agentic_engine import AgenticQueryEngine
+from src.agentic_engine import MasterLegalAgent
+
 
 logger = get_logger(__name__)
 
@@ -569,6 +572,9 @@ def init_session_state():
     
     if "show_metrics" not in st.session_state:
         st.session_state.show_metrics = True
+    if "engine" not in st.session_state:
+        with st.spinner("🚀 Initializing LexTemporal AI Agent..."):
+            st.session_state.engine = AgenticQueryEngine()
 
 
 # ============================================================================
@@ -884,12 +890,32 @@ def render_message(msg: Message):
 # ============================================================================
 # MAIN APPLICATION
 # ============================================================================
+
+def init_session_state():
+    if "agent" not in st.session_state:
+        with st.spinner("🚀 Initializing Master Legal Agent..."):
+            st.session_state.agent = MasterLegalAgent()
+    
+    # Add mode selector to sidebar
+    st.sidebar.selectbox(
+        "Agent Mode",
+        ["auto", "verify", "compare", "scenario", "monitor"],
+        key="agent_mode"
+    )
+
+
 def main():
     """Main application entry point."""
     init_session_state()
     
     render_hero()
     render_sidebar()
+
+    if prompt := st.chat_input("Ask anything..."):
+        result = st.session_state.agent.process(
+        prompt, 
+        mode=st.session_state.agent_mode
+        )
     
     if st.session_state.show_metrics:
         render_metrics()
